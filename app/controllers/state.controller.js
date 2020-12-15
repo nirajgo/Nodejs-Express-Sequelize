@@ -57,7 +57,7 @@ exports.findAllStates = (req, res) => {
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message: 'Error retrieving Tutorial with id=' + id,
+				message: err.message || 'Some error occurred while retrieving states.',
 			});
 		});
 };

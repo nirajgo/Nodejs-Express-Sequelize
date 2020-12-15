@@ -29,6 +29,18 @@ exports.create = (req, res) => {
 		mothername: req.body.mothername,
 	};
 
+	//file-upload in client-app folder
+	const file = req.files.file;
+	console.log(file);
+	file.mv(
+		`D:/D Drive/MajorProject/sign-up/public/DataFiles/${file.name}`,
+		(err) => {
+			if (err) {
+				console.log(err);
+			}
+		}
+	);
+
 	// Save User in the database
 	User.create(users)
 		.then((data) => {
@@ -55,6 +67,20 @@ exports.findAllUsers = (req, res) => {
 			res.status(500).send({
 				message:
 					err.message || 'Some error occurred while retrieving tutorials.',
+			});
+		});
+};
+
+exports.getEmails = (req, res) => {
+	db.sequelize
+		.query('select email from users')
+		.then((data) => {
+			console.log(data);
+			res.send(data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving emails.',
 			});
 		});
 };
