@@ -4,8 +4,7 @@ module.exports = (app) => {
 	var router = require('express').Router();
 
 	router.get('/', users.findAllUsers);
-	router.get('/mail', users.getEmails);
-	router.post('/', users.create);
-
+	router.get('/mails', users.checkIfUserMailExist);
+	router.post('/', users.createUser);
 	app.use('/api/users', router);
 };

@@ -4,7 +4,7 @@ const User = db.users;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
-exports.create = (req, res) => {
+exports.createUser = (req, res) => {
 	// Validate request
 	if (!req.body.fname) {
 		res.status(400).send({
@@ -15,6 +15,7 @@ exports.create = (req, res) => {
 
 	//password encryption
 	const hashedPassword = bcrypt.hashSync(req.body.password, 16);
+
 	// Create a User
 	const users = {
 		fname: req.body.fname,
@@ -33,7 +34,7 @@ exports.create = (req, res) => {
 	const file = req.files.file;
 	console.log(file);
 	file.mv(
-		`D:/D Drive/MajorProject/sign-up/public/DataFiles/${file.name}`,
+		`D:/D Drive/MajorProject/React_Client/public/DataFiles/${file.name}`,
 		(err) => {
 			if (err) {
 				console.log(err);
@@ -48,35 +49,32 @@ exports.create = (req, res) => {
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message:
-					err.message || 'Some error occurred while creating the Tutorial.',
+				message: err.message || 'Some error occurred while creating account.',
 			});
 		});
 };
 
 // Retrieve all Users from the database.
 exports.findAllUsers = (req, res) => {
-	const fname = req.query.fname;
-	var condition = fname ? { fname: { [Op.like]: `%${fname}%` } } : null;
-
-	User.findAll({ where: condition })
+	User.findAll()
 		.then((data) => {
 			res.send(data);
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message:
-					err.message || 'Some error occurred while retrieving tutorials.',
+				message: err.message || 'Some error occurred while retrieving users.',
 			});
 		});
 };
 
-exports.getEmails = (req, res) => {
+// const users = await sequelize.query("SELECT * FROM `users`", { type: QueryTypes.SELECT });
+
+exports.checkIfUserMailExist = (req, res) => {
+	const enteredMail = req.body.email;
 	db.sequelize
-		.query('select email from users')
+		.query(`select email from users where email="${enteredMail}"`)
 		.then((data) => {
-			console.log(data);
-			res.send(data);
+			res.send(data[0]);
 		})
 		.catch((err) => {
 			res.status(500).send({
