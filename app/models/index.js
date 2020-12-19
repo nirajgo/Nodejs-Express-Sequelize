@@ -21,7 +21,7 @@ db.sequelize = sequelize;
 
 db.tutorials = require('./tutorial.model.js')(sequelize, Sequelize);
 db.news = require('./news.model.js')(sequelize, Sequelize);
-db.users = require('./user.model.js').default(sequelize, Sequelize);
+db.users = require('./user.model.js')(sequelize, Sequelize);
 db.states = require('./state.model')(sequelize, Sequelize);
 db.categories = require('./category.model')(sequelize, Sequelize);
 db.cities = require('./city.model.js')(sequelize, Sequelize);

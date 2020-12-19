@@ -29,25 +29,6 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Tutorials from the database.
-// exports.findAllStates = (req, res) => {
-// 	const s_name = req.query.s_name;
-// 	var condition = s_name ? { s_name: { [Op.like]: `%${s_name}%` } } : null;
-
-// 	State.findAll({ where: condition })
-// 		.then((data) => {
-// 			res.send(data);
-// 		})
-// 		.catch((err) => {
-// 			res.status(500).send({
-// 				message:
-// 					err.message || 'Some error occurred while retrieving tutorials.',
-// 			});
-// 		});
-// };
-
-// const states = await State.findAll();
-
 exports.findAllStates = (req, res) => {
 	db.sequelize
 		.query('select * from states')

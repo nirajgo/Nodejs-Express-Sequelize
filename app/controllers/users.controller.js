@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const User = db.users;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Tutorial
+// Create and Save a new User
 exports.createUser = (req, res) => {
 	// Validate request
 	if (!req.body.fname) {
@@ -23,7 +23,7 @@ exports.createUser = (req, res) => {
 		email: req.body.email,
 		password: hashedPassword,
 		dob: req.body.dob,
-		role: 'user',
+		role: 'reporter',
 		c_id: req.body.c_id,
 		certificates: req.body.certificates,
 		status: 'pending',
@@ -68,9 +68,9 @@ exports.findAllUsers = (req, res) => {
 };
 
 // const users = await sequelize.query("SELECT * FROM `users`", { type: QueryTypes.SELECT });
-
 exports.checkIfUserMailExist = (req, res) => {
-	const enteredMail = req.body.email;
+	const enteredMail = req.body.checkMail;
+	console.log(enteredMail);
 	db.sequelize
 		.query(`select email from users where email="${enteredMail}"`)
 		.then((data) => {
@@ -78,7 +78,7 @@ exports.checkIfUserMailExist = (req, res) => {
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message: err.message || 'Some error occurred while retrieving emails.',
+				message: err.message || "Some error occurred while retrieving emails.",
 			});
 		});
 };
